@@ -11,3 +11,7 @@ Celem projektu jest stworzenie prostej gry platformowej 2D przy użyciu języka 
 
 - Michał Kacprzak
 - Piotr Harmuszkiewicz
+
+```shell
+go mod tidy && go build && ./game2D
+```
