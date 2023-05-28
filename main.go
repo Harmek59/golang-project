@@ -104,7 +104,7 @@ func main() {
 	for !window.ShouldClose() {
 		draw()
 	}
-    app.Stop()
+	app.Stop()
 }
 
 func draw() {

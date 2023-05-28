@@ -22,7 +22,7 @@ func CreateVertices(vertArr []float32, attribSizes []uint32) Vertices {
 
 	vertices.UnBind()
 
-    vertices.setAttributeSizes(attribSizes)
+	vertices.setAttributeSizes(attribSizes)
 
 	return vertices
 }

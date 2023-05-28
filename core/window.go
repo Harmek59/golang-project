@@ -60,5 +60,5 @@ func (self *Window) ShouldClose() bool {
 	return self.window.ShouldClose()
 }
 func (self *Window) GetWindow() *glfw.Window {
-    return self.window
+	return self.window
 }

@@ -16,7 +16,7 @@ type Buffer struct {
 func CreateBuffer[T any](usage uint32, data []T) Buffer {
 	var buffer Buffer
 	buffer.createBuffer()
-    allocateBuffer(&buffer, usage, &data)
+	allocateBuffer(&buffer, usage, &data)
 	return buffer
 }
 func (self *Buffer) Delete() {
