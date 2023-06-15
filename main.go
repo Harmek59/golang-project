@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"game2d/core"
+	"game2d/ogl"
+	"game2d/systems"
 	"runtime"
 	"strconv"
-
-	"game2D/core"
-	"game2D/ogl"
 
 	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/mathgl/mgl32"
@@ -19,11 +19,6 @@ var window core.Window
 var app *tview.Application
 
 var color mgl32.Vec3 = mgl32.Vec3{1.0, 0.5, 0.4}
-
-const (
-	width  = 500
-	height = 500
-)
 
 var (
 	triangles = []float32{
@@ -75,36 +70,46 @@ func run_tview() {
 }
 
 func main() {
-	var err error
+	game := systems.NewGame()
+	for {
 
-	window, err = core.CreateWindow()
-	defer window.Delete()
-	if err != nil {
-		panic(err)
+		err := game.Update()
+		if err != nil {
+			panic(err)
+			break
+		}
+		if game.IsOver {
+			break
+		}
+
 	}
 
-	vector := mgl32.Vec3{1.0, 0.0, 0.0}
-	fmt.Println(vector)
-	fmt.Println(color[0])
-
-	mainShader, err = ogl.CreateShader("shaders/mainShader.vert", "shaders/mainShader.frag")
-	defer mainShader.Delete()
-	if err != nil {
-		panic(err)
-	}
-	buff := ogl.CreateBuffer(gl.ARRAY_BUFFER, triangles)
-	defer buff.Delete()
-	buff.Bind(gl.ARRAY_BUFFER)
-
-	vertices = ogl.CreateVertices(triangles, []uint32{3})
-	defer vertices.Delete()
-
-	go run_tview()
-
-	for !window.ShouldClose() {
-		draw()
-	}
-	app.Stop()
+	//var err error
+	//
+	//window, err = core.CreateWindow()
+	//defer window.Delete()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//mainShader, err = ogl.CreateShader("shaders/mainShader.vert", "shaders/mainShader.frag")
+	//defer mainShader.Delete()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//buff := ogl.CreateBuffer(gl.ARRAY_BUFFER, triangles)
+	//defer buff.Delete()
+	//buff.Bind(gl.ARRAY_BUFFER)
+	//
+	//vertices = ogl.CreateVertices(triangles, []uint32{3})
+	//defer vertices.Delete()
+	//
+	////go run_tview()
+	//
+	//for !window.ShouldClose() {
+	//	draw()
+	//}
+	//app.Stop()
 }
 
 func draw() {

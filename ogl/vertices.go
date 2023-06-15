@@ -26,21 +26,21 @@ func CreateVertices(vertArr []float32, attribSizes []uint32) Vertices {
 
 	return vertices
 }
-func (self *Vertices) Delete() {
-	gl.DeleteVertexArrays(1, &self.vao)
-	self.buffer.Delete()
-	self.vao = 0
+func (vertices *Vertices) Delete() {
+	gl.DeleteVertexArrays(1, &vertices.vao)
+	vertices.buffer.Delete()
+	vertices.vao = 0
 }
-func (self *Vertices) Bind() {
-	gl.BindVertexArray(self.vao)
+func (vertices *Vertices) Bind() {
+	gl.BindVertexArray(vertices.vao)
 }
-func (self *Vertices) UnBind() {
+func (vertices *Vertices) UnBind() {
 	gl.BindVertexArray(0)
 }
 
-func (self *Vertices) setAttributeSizes(attribSizes []uint32) {
-	self.Bind()
-	self.buffer.Bind(gl.ARRAY_BUFFER)
+func (vertices *Vertices) setAttributeSizes(attribSizes []uint32) {
+	vertices.Bind()
+	vertices.buffer.Bind(gl.ARRAY_BUFFER)
 
 	var offsetOfAllAttributes uint32
 	for _, v := range attribSizes {
@@ -59,6 +59,6 @@ func (self *Vertices) setAttributeSizes(attribSizes []uint32) {
 		positionOfAttribute++
 	}
 
-	self.buffer.UnBind()
-	self.UnBind()
+	vertices.buffer.UnBind()
+	vertices.UnBind()
 }
