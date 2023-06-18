@@ -1,14 +1,13 @@
 package core
 
 import (
+	"game2d/config"
 	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
 const (
-	WIDTH       = 500
-	HEIGHT      = 500
-	WINDOW_NAME = "Game2D"
+	WindowName = "Game2D"
 )
 
 type Window struct {
@@ -28,7 +27,7 @@ func CreateWindow() (Window, error) {
 	glfw.WindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
 	glfw.WindowHint(glfw.OpenGLForwardCompatible, glfw.True)
 
-	window.window, err = glfw.CreateWindow(WIDTH, HEIGHT, WINDOW_NAME, nil, nil)
+	window.window, err = glfw.CreateWindow(int(config.C.ScreenWidth), int(config.C.ScreenHeight), WindowName, nil, nil)
 	if err != nil {
 		return window, err
 	}
@@ -38,27 +37,27 @@ func CreateWindow() (Window, error) {
 	if err != nil {
 		return window, err
 	}
-	gl.Viewport(0, 0, WIDTH, HEIGHT)
+	gl.Viewport(0, 0, int32(config.C.ScreenWidth), int32(config.C.ScreenHeight))
 
 	// Vsync
 	glfw.SwapInterval(1)
 
 	return window, nil
 }
-func (self *Window) Delete() {
-	self.window.Destroy()
+func (window *Window) Delete() {
+	window.window.Destroy()
 	glfw.Terminate()
 }
-func (self *Window) BeginFrame() {
+func (window *Window) BeginFrame() {
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 }
-func (self *Window) EndFrame() {
+func (window *Window) EndFrame() {
 	glfw.PollEvents()
-	self.window.SwapBuffers()
+	window.window.SwapBuffers()
 }
-func (self *Window) ShouldClose() bool {
-	return self.window.ShouldClose()
+func (window *Window) ShouldClose() bool {
+	return window.window.ShouldClose()
 }
-func (self *Window) GetWindow() *glfw.Window {
-	return self.window
+func (window *Window) GetWindow() *glfw.Window {
+	return window.window
 }

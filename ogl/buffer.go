@@ -19,34 +19,34 @@ func CreateBuffer[T any](usage uint32, data []T) Buffer {
 	allocateBuffer(&buffer, usage, &data)
 	return buffer
 }
-func (self *Buffer) Delete() {
-	gl.DeleteBuffers(1, &self.bufferID)
-	self.bufferID = 0
-	self.bufferSize = 0
+func (buffer *Buffer) Delete() {
+	gl.DeleteBuffers(1, &buffer.bufferID)
+	buffer.bufferID = 0
+	buffer.bufferSize = 0
 }
-func (self *Buffer) Bind(bindingTarget uint32) {
-	if self.currentBinding != 0 {
-		self.UnBind()
+func (buffer *Buffer) Bind(bindingTarget uint32) {
+	if buffer.currentBinding != 0 {
+		buffer.UnBind()
 	}
-	self.currentBinding = bindingTarget
-	gl.BindBuffer(self.currentBinding, self.bufferID)
+	buffer.currentBinding = bindingTarget
+	gl.BindBuffer(buffer.currentBinding, buffer.bufferID)
 }
-func (self *Buffer) UnBind() {
-	self.currentBinding = 0
-	gl.BindBuffer(self.currentBinding, self.bufferID)
+func (buffer *Buffer) UnBind() {
+	buffer.currentBinding = 0
+	gl.BindBuffer(buffer.currentBinding, buffer.bufferID)
 }
-func (self *Buffer) MapBuffer(bufferTarget uint32, access uint32) unsafe.Pointer {
+func (buffer *Buffer) MapBuffer(bufferTarget uint32, access uint32) unsafe.Pointer {
 	return gl.MapBuffer(bufferTarget, access)
 }
-func (self *Buffer) UnMap(bufferTarget uint32) {
+func (buffer *Buffer) UnMap(bufferTarget uint32) {
 	gl.UnmapBuffer(bufferTarget)
 }
-func (self *Buffer) BindBufferBase(bufferTarget uint32, bindingIndex uint32) {
-	gl.BindBufferBase(bufferTarget, bindingIndex, self.bufferID)
+func (buffer *Buffer) BindBufferBase(bufferTarget uint32, bindingIndex uint32) {
+	gl.BindBufferBase(bufferTarget, bindingIndex, buffer.bufferID)
 }
 
-func (self *Buffer) createBuffer() {
-	gl.GenBuffers(1, &self.bufferID)
+func (buffer *Buffer) createBuffer() {
+	gl.GenBuffers(1, &buffer.bufferID)
 }
 func allocateBuffer[T any](buffer *Buffer, usage uint32, data *[]T) {
 	buffer.Bind(gl.ARRAY_BUFFER)

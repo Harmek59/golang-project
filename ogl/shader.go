@@ -44,39 +44,39 @@ func CreateShader(vertexShaderPath string, fragmentShaderPath string) (Shader, e
 
 	return s, nil
 }
-func (self *Shader) Delete() {
-	gl.DeleteProgram(self.programID)
-	self.programID = 0
+func (s *Shader) Delete() {
+	gl.DeleteProgram(s.programID)
+	s.programID = 0
 }
-func (self *Shader) Use() {
-	gl.UseProgram(self.programID)
+func (s *Shader) Use() {
+	gl.UseProgram(s.programID)
 }
-func (self *Shader) SetInt(name string, value int32) {
-	gl.Uniform1i(self.getUniformLocation(name), value)
+func (s *Shader) SetInt(name string, value int32) {
+	gl.Uniform1i(s.getUniformLocation(name), value)
 }
-func (self *Shader) SetFloat(name string, value float32) {
-	gl.Uniform1f(self.getUniformLocation(name), value)
+func (s *Shader) SetFloat(name string, value float32) {
+	gl.Uniform1f(s.getUniformLocation(name), value)
 }
-func (self *Shader) SetVec2(name string, value mgl32.Vec2) {
-	gl.Uniform2fv(self.getUniformLocation(name), 1, &value[0])
+func (s *Shader) SetVec2(name string, value mgl32.Vec2) {
+	gl.Uniform2fv(s.getUniformLocation(name), 1, &value[0])
 }
-func (self *Shader) SetVec3(name string, value mgl32.Vec3) {
-	gl.Uniform3fv(self.getUniformLocation(name), 1, &value[0])
+func (s *Shader) SetVec3(name string, value mgl32.Vec3) {
+	gl.Uniform3fv(s.getUniformLocation(name), 1, &value[0])
 }
-func (self *Shader) SetMat3(name string, value mgl32.Mat3) {
-	gl.UniformMatrix3fv(self.getUniformLocation(name), 1, false, &value[0])
+func (s *Shader) SetMat3(name string, value mgl32.Mat3) {
+	gl.UniformMatrix3fv(s.getUniformLocation(name), 1, false, &value[0])
 }
-func (self *Shader) SetMat4(name string, value mgl32.Mat4) {
-	gl.UniformMatrix4fv(self.getUniformLocation(name), 1, false, &value[0])
+func (s *Shader) SetMat4(name string, value mgl32.Mat4) {
+	gl.UniformMatrix4fv(s.getUniformLocation(name), 1, false, &value[0])
 }
 
-func (self *Shader) createProgram() {
-	self.programID = gl.CreateProgram()
+func (s *Shader) createProgram() {
+	s.programID = gl.CreateProgram()
 }
-func (self *Shader) getUniformLocation(name string) int32 {
+func (s *Shader) getUniformLocation(name string) int32 {
 	name_cstr, free := gl.Strs(name)
 	defer free()
-	return gl.GetUniformLocation(self.programID, *name_cstr)
+	return gl.GetUniformLocation(s.programID, *name_cstr)
 }
 func createAndCompileShader(shaderCode string, shaderType uint32) (uint32, error) {
 	shader := gl.CreateShader(shaderType)
@@ -101,21 +101,21 @@ func createAndCompileShader(shaderCode string, shaderType uint32) (uint32, error
 
 	return shader, nil
 }
-func (self *Shader) attachShaderToProgram(shader uint32) {
-	gl.AttachShader(self.programID, shader)
+func (s *Shader) attachShaderToProgram(shader uint32) {
+	gl.AttachShader(s.programID, shader)
 	gl.DeleteShader(shader)
 }
-func (self *Shader) linkProgram() error {
-	gl.LinkProgram(self.programID)
+func (s *Shader) linkProgram() error {
+	gl.LinkProgram(s.programID)
 
 	var status int32
-	gl.GetProgramiv(self.programID, gl.LINK_STATUS, &status)
+	gl.GetProgramiv(s.programID, gl.LINK_STATUS, &status)
 	if status == gl.FALSE {
 		var logLength int32
-		gl.GetProgramiv(self.programID, gl.INFO_LOG_LENGTH, &logLength)
+		gl.GetProgramiv(s.programID, gl.INFO_LOG_LENGTH, &logLength)
 
 		log := strings.Repeat("\x00", int(logLength+1))
-		gl.GetProgramInfoLog(self.programID, logLength, nil, gl.Str(log))
+		gl.GetProgramInfoLog(s.programID, logLength, nil, gl.Str(log))
 
 		return fmt.Errorf("Failed to link program: %v", log)
 	}
