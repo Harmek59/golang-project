@@ -29,11 +29,11 @@ func CreateShader(vertexShaderPath string, fragmentShaderPath string) (Shader, e
 
 	fragShaderCode, err := os.ReadFile(fragmentShaderPath)
 	if err != nil {
-		return s, fmt.Errorf("Failed to load file: %v, err: %v", vertexShaderPath, err)
+		return s, fmt.Errorf("Failed to load file: %v, err: %v", fragmentShaderPath, err)
 	}
 	shader, err = createAndCompileShader(string(fragShaderCode), gl.FRAGMENT_SHADER)
 	if err != nil {
-		return s, fmt.Errorf("%v: %v", vertexShaderPath, err)
+		return s, fmt.Errorf("%v: %v", fragmentShaderPath, err)
 	}
 	s.attachShaderToProgram(shader)
 

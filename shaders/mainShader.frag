@@ -1,9 +1,16 @@
 #version 330
+out vec4 fragColor;
+
+in vec2 textCoord;
+flat in int useColor;
 
 uniform vec3 color;
-
-out vec4 frag_colour;
+uniform sampler2D text;
 
 void main() {
-    frag_colour = vec4(color, 1.0);
+    if (useColor != 0){
+        fragColor = vec4(color, 1.0);
+    } else {
+        fragColor = texture(text, textCoord);
+    }
 }

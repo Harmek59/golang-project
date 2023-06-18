@@ -1,6 +1,8 @@
 package core
 
 import (
+	"game2d/config"
+
 	"github.com/go-gl/mathgl/mgl32"
 )
 
@@ -21,13 +23,13 @@ type Camera struct {
 	screenSize mgl32.Vec2
 }
 
-func CreateCamera(screenWidth float32, screenHeight float32) Camera {
+func CreateCamera() Camera {
 	var camera Camera
-	camera.position = mgl32.Vec3{0.0, screenHeight/4, 0.0}
+	camera.position = mgl32.Vec3{0.0, float32(config.C.CameraYOffset), 0.0}
 	camera.front = mgl32.Vec3{0.0, 0.0, -1.0}
 	camera.up = mgl32.Vec3{0.0, 1.0, 0.0}
 	camera.right = mgl32.Vec3{1.0, 0.0, 0.0}
-	camera.screenSize = mgl32.Vec2{screenWidth, screenHeight}
+	camera.screenSize = mgl32.Vec2{float32(config.C.ScreenWidth), float32(config.C.ScreenHeight)}
 	return camera
 }
 

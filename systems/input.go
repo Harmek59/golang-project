@@ -1,7 +1,6 @@
 package systems
 
 import (
-	"fmt"
 	"game2d/components"
 	"game2d/config"
 	"github.com/go-gl/glfw/v3.3/glfw"
@@ -19,7 +18,6 @@ func (i *InputSystem) Update(game *Game, dt float64) {
 
 
     if glfw.GetCurrentContext().GetKey(glfw.KeySpace) == glfw.Press && !playerJumpableComponent.IsJumping {
-		fmt.Printf("Entity %d started jumping\n", playerEntity.ID)
 		playerJumpableComponent.IsJumping = true
 
 		velocityComponent := playerEntity.GetComponent(&components.VelocityComponent{}).(*components.VelocityComponent)

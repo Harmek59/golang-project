@@ -6,16 +6,15 @@ import (
 	"game2d/config"
 	"game2d/entities"
 	"math/rand"
-	"time"
 )
 
 type RandomObstacleSystem struct {
 	System
-	lastObstacleTime time.Time
+	lastObstacleTime float64
 }
 
 func (r *RandomObstacleSystem) Update(game *Game, dt float64) {
-	if r.shouldGenerateObstacle() {
+	if r.shouldGenerateObstacle(dt) {
 		// Create a new obstacle entity
 		obstacleEntity := r.createNewObstacle()
 		game.AddEntity(&obstacleEntity.Entity)
@@ -32,17 +31,17 @@ func (r *RandomObstacleSystem) createNewObstacle() *entities.Obstacle {
 				&components.PositionComponent{X: config.C.ScreenWidth, Y: r.generateRandomYPosition()},
 				&components.ObjectComponent{Width: r.generateRandomWidth(), Height: r.generateRandomHeight()},
 				&components.VelocityComponent{X: -500, Y: 0},
+                &components.ColliderComponent{},
 			},
 		},
 	}
 	return obstacleEntity
 }
 
-func (r *RandomObstacleSystem) shouldGenerateObstacle() bool {
-	currentTime := time.Now()
-	elapsedTime := currentTime.Sub(r.lastObstacleTime)
-	if elapsedTime >= time.Second*2 {
-		r.lastObstacleTime = currentTime
+func (r *RandomObstacleSystem) shouldGenerateObstacle(dt float64) bool {
+    r.lastObstacleTime += dt
+	if r.lastObstacleTime >= 2 {
+		r.lastObstacleTime = 0
 		return true
 	}
 	return false

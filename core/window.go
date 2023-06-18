@@ -41,6 +41,8 @@ func CreateWindow() (Window, error) {
 
 	// Vsync
 	glfw.SwapInterval(1)
+    gl.Enable(gl.BLEND)
+    gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
 	return window, nil
 }
