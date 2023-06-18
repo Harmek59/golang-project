@@ -6,10 +6,15 @@ import (
 	"game2d/entities"
 )
 
+type SystemI interface {
+    Update(game *Game, dt float64)
+}
+
 type Game struct {
 	Entities []*entities.Entity
 	IsOver   bool
 	Score    int
+	systems  []SystemI
 }
 
 func NewGame() *Game {
@@ -19,6 +24,11 @@ func NewGame() *Game {
 		IsOver: false,
 	}
 	game.AddEntity(&entities.CreateNewPlayer().Entity)
+	game.systems = append(game.systems, &InputSystem{})
+	game.systems = append(game.systems, &MovementSystem{})
+	game.systems = append(game.systems, &CollisionSystem{})
+	game.systems = append(game.systems, &RandomObstacleSystem{})
+	game.systems = append(game.systems, CreateRenderSystem())
 	return game
 }
 
@@ -53,21 +63,12 @@ func (game *Game) FindPlayerEntity() *entities.Entity {
 	panic("Player Entity must be defined")
 }
 
-// TODO verify order of systems
-
-func GetSystems() []System {
-	return []System{
-		&RenderSystem{},
-		&InputSystem{},
-		&MovementSystem{},
-		&CollisionSystem{},
-		&RandomObstacleSystem{},
-	}
-}
-
-func (game *Game) Update() error {
-	for _, system := range GetSystems() {
-		system.Update(game)
+func (game *Game) Update(dt float64) error {
+    // if(game.IsOver){
+    //     dt = 0.0
+    // }
+	for _, system := range game.systems {
+		system.Update(game, dt)
 	}
 	return nil
 }

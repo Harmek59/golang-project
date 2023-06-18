@@ -17,7 +17,7 @@ func init() {
 		ScreenHeight: 480,
 		PlayerWidth:  20,
 		PlayerHeight: 30,
-		Gravity:      2,
-		JumpForce:    6,
+		Gravity:      1000,
+		JumpForce:    500,
 	}
 }

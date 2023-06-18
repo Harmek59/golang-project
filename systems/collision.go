@@ -6,7 +6,7 @@ type CollisionSystem struct {
 	System
 }
 
-func (o *CollisionSystem) Update(game *Game) {
+func (o *CollisionSystem) Update(game *Game, dt float64) {
 	playerEntity := game.FindPlayerEntity()
 
 	for _, entity := range game.Entities {

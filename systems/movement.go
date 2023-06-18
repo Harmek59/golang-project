@@ -4,15 +4,13 @@ import (
 	"fmt"
 	"game2d/components"
 	"game2d/config"
-	"time"
 )
 
 type MovementSystem struct{}
 
-func (p *MovementSystem) Update(game *Game) {
+func (p *MovementSystem) Update(game *Game, dt float64) {
 	// Update the position of entities based on their velocity
 	for _, entity := range game.Entities {
-		time.Sleep(1 * time.Second)
 		if positionComponent := entity.GetComponent(&components.PositionComponent{}); positionComponent != nil {
 			position := positionComponent.(*components.PositionComponent)
 
@@ -23,18 +21,19 @@ func (p *MovementSystem) Update(game *Game) {
 
 				if jumpableComponent != nil && jumpableComponent.(*components.JumpableComponent).IsJumping {
 					// Apply gravity
-					velocity.Y -= config.C.Gravity
+					velocity.Y -= dt * config.C.Gravity
 				}
+
+				// Update position based on velocity
+				position.X += dt * velocity.X
+				position.Y += dt * velocity.Y
 
 				// Handle collision with the ground
 				if velocity.Y != 0 {
 					if objectComponent := entity.GetComponent(&components.ObjectComponent{}); objectComponent != nil {
-						object := objectComponent.(*components.ObjectComponent)
-						fmt.Println(velocity.Y, position.Y, object.Height, object.Height+velocity.Y)
-						if velocity.Y < 0 && position.Y+velocity.Y < 0 {
+						if position.Y < 0 {
 							position.Y = 0
 							velocity.Y = 0
-							fmt.Printf("Entity %d stopped jumping\n", entity.ID)
 
 							if jumpableComponent != nil {
 								jumpableComponent.(*components.JumpableComponent).IsJumping = false
@@ -44,18 +43,11 @@ func (p *MovementSystem) Update(game *Game) {
 
 				}
 
-				// Update position based on velocity
-				position.X += velocity.X
-				position.Y += velocity.Y
-
-				//TODO check if < or <=
-				if position.X < 0 {
+				if position.X < -4000 {
 					game.DeleteEntity(entity)
+                    fmt.Println("DESPAWN")
 					game.Score += 1
 				}
-
-				fmt.Printf("Entity %d position %f %f\n", entity.ID, position.X, position.Y)
-
 			}
 		}
 	}
