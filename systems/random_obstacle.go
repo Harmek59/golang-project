@@ -39,24 +39,25 @@ func (r *RandomObstacleSystem) createNewObstacle() *entities.Obstacle {
 
 func (r *RandomObstacleSystem) shouldGenerateObstacle(dt float64) bool {
 	r.lastObstacleTime += dt
-	if r.lastObstacleTime >= 2 {
+	if r.lastObstacleTime >= 1*rand.Float64()+1 {
 		r.lastObstacleTime = 0
 		return true
 	}
 	return false
 }
 
-// TODO implement after obstacle visualization
-
 func (r *RandomObstacleSystem) generateRandomYPosition() float64 {
-	return 0
-	//return rand.Float64() * (config.C.ScreenHeight - config.C.PlayerHeight)
+	if rand.Float64() > 0.6 {
+		return 0
+	} else {
+		return 1.2 * config.C.PlayerHeight
+	}
 }
 
 func (r *RandomObstacleSystem) generateRandomWidth() float64 {
-	return rand.Float64()*50 + 20
+	return rand.Float64()*30 + 30
 }
 
 func (r *RandomObstacleSystem) generateRandomHeight() float64 {
-	return rand.Float64()*50 + 20
+	return rand.Float64()*30 + 30
 }
