@@ -51,6 +51,7 @@ func (window *Window) Delete() {
 	glfw.Terminate()
 }
 func (window *Window) BeginFrame() {
+    gl.ClearColor(0.2, 0.2, 0.2, 1.0)
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 }
 func (window *Window) EndFrame() {
