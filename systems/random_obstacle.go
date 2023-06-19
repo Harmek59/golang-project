@@ -1,7 +1,6 @@
 package systems
 
 import (
-	"fmt"
 	"game2d/components"
 	"game2d/config"
 	"game2d/entities"
@@ -17,7 +16,6 @@ func (r *RandomObstacleSystem) Update(game *Game, dt float64) {
 	if r.shouldGenerateObstacle(dt) {
 		obstacleEntity := r.createNewObstacle()
 		game.AddEntity(&obstacleEntity.Entity)
-		fmt.Printf("Entity Obstacle %d generated\n", obstacleEntity.ID)
 
 	}
 }

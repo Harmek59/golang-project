@@ -32,6 +32,7 @@ func (game *Game) setupSystems() {
 	game.systems = append(game.systems, &MovementSystem{})
 	game.systems = append(game.systems, &CollisionSystem{})
 	game.systems = append(game.systems, &SpriteAnimationSystem{})
+	game.systems = append(game.systems, &ScrollingAnimationSystem{})
 	game.systems = append(game.systems, &RandomObstacleSystem{})
 	game.systems = append(game.systems, CreateRenderSystem())
 }
@@ -52,7 +53,8 @@ func (game *Game) setupBackground() {
 					Width:  config.C.ScreenWidth,
 					Height: config.C.ScreenHeight,
 				},
-				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{448, 106}, TexCoordsEnd: mgl32.Vec2{768, 286}},
+				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{0, 0}, TexCoordsEnd: mgl32.Vec2{320, 180}, TextureID: 1},
+				&components.ScrollingAnimationComponent{Speed: mgl32.Vec2{10, 0}},
 			},
 		},
 	)
@@ -65,7 +67,8 @@ func (game *Game) setupBackground() {
 					Width:  config.C.ScreenWidth,
 					Height: config.C.ScreenHeight,
 				},
-				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{768, 106}, TexCoordsEnd: mgl32.Vec2{1088, 286}},
+				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{0, 0}, TexCoordsEnd: mgl32.Vec2{320, 180}, TextureID: 2},
+				&components.ScrollingAnimationComponent{Speed: mgl32.Vec2{30, 0}},
 			},
 		},
 	)
@@ -78,7 +81,22 @@ func (game *Game) setupBackground() {
 					Width:  config.C.ScreenWidth,
 					Height: config.C.ScreenHeight,
 				},
-				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{1088, 106}, TexCoordsEnd: mgl32.Vec2{1408, 286}},
+				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{0, 0}, TexCoordsEnd: mgl32.Vec2{320, 180}, TextureID: 3},
+				&components.ScrollingAnimationComponent{Speed: mgl32.Vec2{60, 0}},
+			},
+		},
+	)
+	game.AddEntity(
+		&entities.Entity{
+			ID: entities.GenerateUniqueEntityID(),
+			Components: []interface{}{
+				&components.PositionComponent{X: -config.C.ScreenWidth / 2, Y: -50.0},
+				&components.ObjectComponent{
+					Width:  64 * 64,
+					Height: 64,
+				},
+				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{0, 0}, TexCoordsEnd: mgl32.Vec2{64 * 32, 31}, TextureID: 4},
+				&components.ScrollingAnimationComponent{Speed: mgl32.Vec2{150, 0}},
 			},
 		},
 	)

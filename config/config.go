@@ -20,6 +20,6 @@ func init() {
 		PlayerHeight:  90,
 		Gravity:       1500,
 		JumpForce:     500,
-		CameraYOffset: 480 / 4,
+		CameraYOffset: 480 / 2.5,
 	}
 }
