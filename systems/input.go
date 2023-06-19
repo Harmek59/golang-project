@@ -10,14 +10,11 @@ type InputSystem struct {
 	System
 }
 
-func (i *InputSystem) Update(game *Game, dt float64) {
+func (i *InputSystem) Update(game *Game, _ float64) {
 	playerEntity := game.FindPlayerEntity()
 	playerJumpableComponent := playerEntity.GetComponent(&components.JumpableComponent{}).(*components.JumpableComponent)
 
-	// TODO add detecting space input
-
-
-    if glfw.GetCurrentContext().GetKey(glfw.KeySpace) == glfw.Press && !playerJumpableComponent.IsJumping {
+	if glfw.GetCurrentContext().GetKey(glfw.KeySpace) == glfw.Press && !playerJumpableComponent.IsJumping {
 		playerJumpableComponent.IsJumping = true
 
 		velocityComponent := playerEntity.GetComponent(&components.VelocityComponent{}).(*components.VelocityComponent)

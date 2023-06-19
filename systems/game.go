@@ -108,8 +108,8 @@ func (game *Game) FindPlayerEntity() *entities.Entity {
 }
 
 func (game *Game) Update(dt float64) error {
-	if(game.IsOver){
-	    dt = 0.0
+	if game.IsOver {
+		dt = 0.0
 	}
 	for _, system := range game.systems {
 		system.Update(game, dt)

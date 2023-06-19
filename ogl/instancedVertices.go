@@ -58,7 +58,7 @@ func (vertices *InstancedVertices) SetUpInstanceBuffer(bufferSizeByte int, attri
 	vertices.instanceBuffer.Bind(gl.ARRAY_BUFFER)
 
 	var beginOfAttribute uint32
-	var positionOfAttribute uint32 = uint32(vertices.numberOfModelAttributes)
+	var positionOfAttribute = uint32(vertices.numberOfModelAttributes)
 	sizeOfFloat := reflect.TypeOf(float32(0.0)).Size()
 	for _, v := range attribSizes {
 		gl.EnableVertexAttribArray(positionOfAttribute)

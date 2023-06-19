@@ -51,7 +51,7 @@ func (r *RenderSystem) Delete() {
 	r.vertices.Delete()
 	r.texture.Delete()
 }
-func (r *RenderSystem) Update(Game *Game, dt float64) {
+func (r *RenderSystem) Update(Game *Game, _ float64) {
 	// Render entities on the screen
 	r.mainShader.Use()
 	gl.ActiveTexture(gl.TEXTURE0)
@@ -79,23 +79,23 @@ func (r *RenderSystem) Update(Game *Game, dt float64) {
 		if positionComponent != nil && objectComponent != nil {
 			position := positionComponent.(*components.PositionComponent)
 			size := objectComponent.(*components.ObjectComponent)
-			slice[i * 8 + 0] = float32(position.X)
-			slice[i * 8 + 1] = float32(position.Y)
-			slice[i * 8 + 2] = float32(size.Width)
-			slice[i * 8 + 3] = float32(size.Height)
+			slice[i*8+0] = float32(position.X)
+			slice[i*8+1] = float32(position.Y)
+			slice[i*8+2] = float32(size.Width)
+			slice[i*8+3] = float32(size.Height)
 			if spriteComponent != nil {
 				sprite := spriteComponent.(*components.SpriteComponent)
 				begin := mgl32.Vec2{sprite.TexCoordsBegin[0] / float32(r.texture.Width), sprite.TexCoordsEnd[1] / float32(r.texture.Height)}
 				end := mgl32.Vec2{sprite.TexCoordsEnd[0] / float32(r.texture.Width), sprite.TexCoordsBegin[1] / float32(r.texture.Height)}
-				slice[i * 8 + 4] = float32(begin[0])
-				slice[i * 8 + 5] = float32(begin[1])
-				slice[i * 8 + 6] = float32(end[0])
-				slice[i * 8 + 7] = float32(end[1])
+				slice[i*8+4] = float32(begin[0])
+				slice[i*8+5] = float32(begin[1])
+				slice[i*8+6] = float32(end[0])
+				slice[i*8+7] = float32(end[1])
 			} else {
-				slice[i * 8 + 4] = 0.0
-				slice[i * 8 + 5] = 0.0
-				slice[i * 8 + 6] = 0.0
-				slice[i * 8 + 7] = 0.0
+				slice[i*8+4] = 0.0
+				slice[i*8+5] = 0.0
+				slice[i*8+6] = 0.0
+				slice[i*8+7] = 0.0
 			}
 			numOfEntitiesToDraw++
 		}

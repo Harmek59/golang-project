@@ -11,21 +11,6 @@ type Vertices struct {
 	vao    uint32
 }
 
-func CreateVertices(vertArr []float32, attribSizes []uint32) Vertices {
-	var vertices Vertices
-	gl.GenVertexArrays(1, &vertices.vao)
-
-	vertices.Bind()
-
-	vertices.buffer = CreateBuffer(gl.STATIC_DRAW, vertArr)
-	vertices.buffer.Bind(gl.ARRAY_BUFFER)
-
-	vertices.UnBind()
-
-	vertices.setAttributeSizes(attribSizes)
-
-	return vertices
-}
 func (vertices *Vertices) Delete() {
 	gl.DeleteVertexArrays(1, &vertices.vao)
 	vertices.buffer.Delete()

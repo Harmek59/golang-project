@@ -34,9 +34,6 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		// if game.IsOver {
-		// 	break
-		// }
 		window.EndFrame()
 	}
 }

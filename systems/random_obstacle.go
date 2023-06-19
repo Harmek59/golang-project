@@ -15,7 +15,6 @@ type RandomObstacleSystem struct {
 
 func (r *RandomObstacleSystem) Update(game *Game, dt float64) {
 	if r.shouldGenerateObstacle(dt) {
-		// Create a new obstacle entity
 		obstacleEntity := r.createNewObstacle()
 		game.AddEntity(&obstacleEntity.Entity)
 		fmt.Printf("Entity Obstacle %d generated\n", obstacleEntity.ID)
@@ -31,7 +30,7 @@ func (r *RandomObstacleSystem) createNewObstacle() *entities.Obstacle {
 				&components.PositionComponent{X: config.C.ScreenWidth, Y: r.generateRandomYPosition()},
 				&components.ObjectComponent{Width: r.generateRandomWidth(), Height: r.generateRandomHeight()},
 				&components.VelocityComponent{X: -500, Y: 0},
-                &components.ColliderComponent{},
+				&components.ColliderComponent{},
 			},
 		},
 	}
@@ -39,7 +38,7 @@ func (r *RandomObstacleSystem) createNewObstacle() *entities.Obstacle {
 }
 
 func (r *RandomObstacleSystem) shouldGenerateObstacle(dt float64) bool {
-    r.lastObstacleTime += dt
+	r.lastObstacleTime += dt
 	if r.lastObstacleTime >= 2 {
 		r.lastObstacleTime = 0
 		return true

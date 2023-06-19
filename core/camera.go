@@ -8,13 +8,6 @@ import (
 
 type CameraMovement int
 
-const (
-	CAMERA_RIGHT CameraMovement = iota
-	CAMERA_UP
-	CAMERA_LEFT
-	CAMERA_DOWN
-)
-
 type Camera struct {
 	position   mgl32.Vec3
 	front      mgl32.Vec3
