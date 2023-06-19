@@ -1,25 +1,29 @@
 package systems
 
-import "fmt"
+import (
+	"fmt"
+	"game2d/components"
+)
 
 type CollisionSystem struct {
 	System
 }
 
-func (o *CollisionSystem) Update(game *Game) {
+func (o *CollisionSystem) Update(game *Game, dt float64) {
+	if dt == 0.0 {
+		return
+	}
 	playerEntity := game.FindPlayerEntity()
 
 	for _, entity := range game.Entities {
-		if playerEntity.ID == entity.ID {
-			continue
+		colliderComponent := entity.GetComponent(&components.ColliderComponent{})
+		if colliderComponent != nil {
+			if playerEntity.IsColliding(entity) {
+				fmt.Println("Collision detected!")
+				// Perform additional game over logic here
+				game.GameOver()
+				return
+			}
 		}
-
-		if playerEntity.IsColliding(entity) {
-			fmt.Println("Collision detected!")
-			// Perform additional game over logic here
-			game.GameOver()
-			return
-		}
-
 	}
 }

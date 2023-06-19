@@ -19,7 +19,7 @@
 
 # Go workspace file
 go.work
-game2D
-game2D.exe
+game2d
+game2d.exe
 
 .idea

@@ -57,12 +57,6 @@ func (entity *Entity) IsColliding(obstacle *Entity) bool {
 	if entityRect := entity.constructRect(); entityRect != nil {
 		if obstacleRect := obstacle.constructRect(); obstacleRect != nil {
 			collision := entityRect.Overlaps(*obstacleRect)
-			if collision {
-				fmt.Printf("Collision detected entity %d with entity %d\n", entity.ID, obstacle.ID)
-			} else {
-				fmt.Printf("No Collision between entity %d and entity %d\n", entity.ID, obstacle.ID)
-
-			}
 			return collision
 		}
 	}

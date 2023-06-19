@@ -41,6 +41,8 @@ func CreateWindow() (Window, error) {
 
 	// Vsync
 	glfw.SwapInterval(1)
+    gl.Enable(gl.BLEND)
+    gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
 	return window, nil
 }
@@ -49,6 +51,7 @@ func (window *Window) Delete() {
 	glfw.Terminate()
 }
 func (window *Window) BeginFrame() {
+    gl.ClearColor(0.2, 0.2, 0.2, 1.0)
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 }
 func (window *Window) EndFrame() {
