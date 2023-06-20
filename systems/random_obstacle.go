@@ -11,6 +11,7 @@ import (
 )
 
 var possibleObstacles = [][]interface{}{
+    // white boar
 	{
 		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
 		&components.ObjectComponent{Width: 2 * 38, Height: 2 * 28},
@@ -26,6 +27,7 @@ var possibleObstacles = [][]interface{}{
 			Length:     6,
 		},
 	},
+	// brown boar
 	{
 		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
 		&components.ObjectComponent{Width: 2 * 38, Height: 2 * 28},
@@ -41,6 +43,7 @@ var possibleObstacles = [][]interface{}{
 			Length:     6,
 		},
 	},
+	// black boar
 	{
 		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
 		&components.ObjectComponent{Width: 2 * 38, Height: 2 * 28},
@@ -56,10 +59,11 @@ var possibleObstacles = [][]interface{}{
 			Length:     6,
 		},
 	},
+	// bee
 	{
 		&components.PositionComponent{X: config.C.ScreenWidth, Y: 1.2 * config.C.PlayerHeight},
 		&components.ObjectComponent{Width: 2 * 24, Height: 2 * 40},
-		&components.VelocityComponent{X: -500, Y: 0},
+		&components.VelocityComponent{X: -600, Y: 0},
 		&components.ColliderComponent{},
 		&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{84, 5}, TexCoordsEnd: mgl32.Vec2{120, 44}, TextureID: 6},
 		&components.SpriteAnimationComponent{
@@ -71,10 +75,11 @@ var possibleObstacles = [][]interface{}{
 			Length:     4,
 		},
 	},
+	// snail
 	{
 		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
 		&components.ObjectComponent{Width: 2 * 36, Height: 2 * 22},
-		&components.VelocityComponent{X: -400, Y: 0},
+		&components.VelocityComponent{X: -330, Y: 0},
 		&components.ColliderComponent{},
 		&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{194, 10}, TexCoordsEnd: mgl32.Vec2{230, 32}, TextureID: 7},
 		&components.SpriteAnimationComponent{
