@@ -13,6 +13,8 @@ uniform sampler2D texture4;
 uniform sampler2D texture5;
 uniform sampler2D texture6;
 uniform sampler2D texture7;
+uniform sampler2D texture8;
+uniform sampler2D texture9;
 
 void main() {
     if (textureID == -1) {
@@ -33,6 +35,10 @@ void main() {
         fragColor = texture(texture6, textCoord);
     } else if (textureID == 7) {
         fragColor = texture(texture7, textCoord);
+    } else if (textureID == 8) {
+        fragColor = texture(texture8, textCoord);
+    } else if (textureID == 9) {
+        fragColor = texture(texture9, textCoord);
     } else {
         fragColor = vec4(1.0, 0.0, 0.0, 1.0);
     }

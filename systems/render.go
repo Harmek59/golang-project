@@ -53,6 +53,8 @@ func CreateRenderSystem() *RenderSystem {
 	addTexture("sprites/boars.png")
 	addTexture("sprites/bee.png")
 	addTexture("sprites/snail.png")
+	addTexture("sprites/game_over.png")
+	addTexture("sprites/digits.png")
 	rs.vertices = ogl.CreateInstancedVertices(triangles, []uint32{3, 2})
 	rs.vertices.SetUpInstanceBuffer(rs.maxEntities*9*4, []uint32{2, 2, 2, 2, 1}, []uint32{1, 1, 1, 1, 1})
 	rs.camera = core.CreateCamera()
