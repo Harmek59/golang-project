@@ -43,9 +43,9 @@ func (p *MovementSystem) Update(game *Game, dt float64) {
 
 				}
 
-				if position.X < -4000 {
+				if position.X < -1000 {
 					game.DeleteEntity(entity)
-                    fmt.Println("DESPAWN")
+					fmt.Println("DESPAWN")
 					game.Score += 1
 				}
 			}

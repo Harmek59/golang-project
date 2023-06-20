@@ -18,7 +18,7 @@ func init() {
 		ScreenHeight:  480,
 		PlayerWidth:   60,
 		PlayerHeight:  90,
-		Gravity:       1000,
+		Gravity:       1500,
 		JumpForce:     500,
 		CameraYOffset: 480 / 4,
 	}

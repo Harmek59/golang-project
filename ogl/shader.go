@@ -19,7 +19,7 @@ func CreateShader(vertexShaderPath string, fragmentShaderPath string) (Shader, e
 
 	vertShaderCode, err := os.ReadFile(vertexShaderPath)
 	if err != nil {
-		return s, fmt.Errorf("Failed to load file: %v, err: %v", vertexShaderPath, err)
+		return s, fmt.Errorf("failed to load file: %v, err: %v", vertexShaderPath, err)
 	}
 	shader, err := createAndCompileShader(string(vertShaderCode), gl.VERTEX_SHADER)
 	if err != nil {
@@ -29,7 +29,7 @@ func CreateShader(vertexShaderPath string, fragmentShaderPath string) (Shader, e
 
 	fragShaderCode, err := os.ReadFile(fragmentShaderPath)
 	if err != nil {
-		return s, fmt.Errorf("Failed to load file: %v, err: %v", fragmentShaderPath, err)
+		return s, fmt.Errorf("failed to load file: %v, err: %v", fragmentShaderPath, err)
 	}
 	shader, err = createAndCompileShader(string(fragShaderCode), gl.FRAGMENT_SHADER)
 	if err != nil {
@@ -37,7 +37,10 @@ func CreateShader(vertexShaderPath string, fragmentShaderPath string) (Shader, e
 	}
 	s.attachShaderToProgram(shader)
 
-	s.linkProgram()
+	err = s.linkProgram()
+	if err != nil {
+		return s, fmt.Errorf("failed to linkProgram: %v", err)
+	}
 	if err != nil {
 		return s, fmt.Errorf("%v: %v", vertexShaderPath, err)
 	}
@@ -74,9 +77,9 @@ func (s *Shader) createProgram() {
 	s.programID = gl.CreateProgram()
 }
 func (s *Shader) getUniformLocation(name string) int32 {
-	name_cstr, free := gl.Strs(name)
+	nameCstr, free := gl.Strs(name)
 	defer free()
-	return gl.GetUniformLocation(s.programID, *name_cstr)
+	return gl.GetUniformLocation(s.programID, *nameCstr)
 }
 func createAndCompileShader(shaderCode string, shaderType uint32) (uint32, error) {
 	shader := gl.CreateShader(shaderType)
@@ -96,7 +99,7 @@ func createAndCompileShader(shaderCode string, shaderType uint32) (uint32, error
 		log := strings.Repeat("\x00", int(logLength+1))
 		gl.GetShaderInfoLog(shader, logLength, nil, gl.Str(log))
 
-		return 0, fmt.Errorf("Failed to compile: %v", log)
+		return 0, fmt.Errorf("failed to compile: %v", log)
 	}
 
 	return shader, nil
@@ -117,7 +120,7 @@ func (s *Shader) linkProgram() error {
 		log := strings.Repeat("\x00", int(logLength+1))
 		gl.GetProgramInfoLog(s.programID, logLength, nil, gl.Str(log))
 
-		return fmt.Errorf("Failed to link program: %v", log)
+		return fmt.Errorf("failed to link program: %v", log)
 	}
 	return nil
 }
