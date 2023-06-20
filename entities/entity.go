@@ -44,10 +44,10 @@ func (entity *Entity) constructRect() *image.Rectangle {
 	}
 
 	entityRect := image.Rect(
-		int(entityPositionComponent.X),
+		int(entityPositionComponent.X+entityobjectComponent.Width/8),
 		int(entityPositionComponent.Y),
-		int(entityPositionComponent.X+entityobjectComponent.Width),
-		int(entityPositionComponent.Y+entityobjectComponent.Height),
+		int(entityPositionComponent.X+0.7*entityobjectComponent.Width),
+		int(entityPositionComponent.Y+0.8*entityobjectComponent.Height),
 	)
 	return &entityRect
 }

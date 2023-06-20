@@ -1,7 +1,6 @@
 package systems
 
 import (
-	"fmt"
 	"game2d/components"
 	"game2d/config"
 )
@@ -43,9 +42,8 @@ func (p *MovementSystem) Update(game *Game, dt float64) {
 
 				}
 
-				if position.X < -1000 {
+				if position.X < -config.C.ScreenWidth/2 - 100 {
 					game.DeleteEntity(entity)
-					fmt.Println("DESPAWN")
 					game.Score += 1
 				}
 			}
