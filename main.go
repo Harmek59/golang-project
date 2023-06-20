@@ -5,6 +5,8 @@ import (
 	"game2d/systems"
 	"runtime"
 	"time"
+
+	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
 var window core.Window
@@ -28,6 +30,9 @@ func main() {
 		currentTime := time.Now()
 		elapsedTime := currentTime.Sub(lastTime)
 		lastTime = currentTime
+		if glfw.GetCurrentContext().GetKey(glfw.KeyEscape) == glfw.Press {
+            break
+		}
 
 		window.BeginFrame()
 		err := game.Update(elapsedTime.Seconds())
