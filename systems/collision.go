@@ -1,7 +1,6 @@
 package systems
 
 import (
-	"fmt"
 	"game2d/components"
 )
 
@@ -19,7 +18,6 @@ func (o *CollisionSystem) Update(game *Game, dt float64) {
 		colliderComponent := entity.GetComponent(&components.ColliderComponent{})
 		if colliderComponent != nil {
 			if playerEntity.IsColliding(entity) {
-				fmt.Println("Collision detected!")
 				// Perform additional game over logic here
 				game.GameOver()
 				return

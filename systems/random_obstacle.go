@@ -5,7 +5,88 @@ import (
 	"game2d/config"
 	"game2d/entities"
 	"math/rand"
+	"reflect"
+
+	"github.com/go-gl/mathgl/mgl32"
 )
+
+var possibleObstacles = [][]interface{}{
+	{
+		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
+		&components.ObjectComponent{Width: 2 * 38, Height: 2 * 28},
+		&components.VelocityComponent{X: -450, Y: 0},
+		&components.ColliderComponent{},
+		&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{4, 2}, TexCoordsEnd: mgl32.Vec2{43, 32}, TextureID: 5},
+		&components.SpriteAnimationComponent{
+			Begin:      mgl32.Vec2{4, 2},
+			End:        mgl32.Vec2{43, 32},
+			Offset:     mgl32.Vec2{48, 0},
+			TimeOffset: 1.0 / 10.0,
+			CurrTime:   0,
+			Length:     6,
+		},
+	},
+	{
+		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
+		&components.ObjectComponent{Width: 2 * 38, Height: 2 * 28},
+		&components.VelocityComponent{X: -500, Y: 0},
+		&components.ColliderComponent{},
+		&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{4, 66}, TexCoordsEnd: mgl32.Vec2{43, 96}, TextureID: 5},
+		&components.SpriteAnimationComponent{
+			Begin:      mgl32.Vec2{4, 66},
+			End:        mgl32.Vec2{43, 96},
+			Offset:     mgl32.Vec2{48, 0},
+			TimeOffset: 1.0 / 10.0,
+			CurrTime:   0,
+			Length:     6,
+		},
+	},
+	{
+		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
+		&components.ObjectComponent{Width: 2 * 38, Height: 2 * 28},
+		&components.VelocityComponent{X: -550, Y: 0},
+		&components.ColliderComponent{},
+		&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{4, 34}, TexCoordsEnd: mgl32.Vec2{43, 64}, TextureID: 5},
+		&components.SpriteAnimationComponent{
+			Begin:      mgl32.Vec2{4, 34},
+			End:        mgl32.Vec2{43, 64},
+			Offset:     mgl32.Vec2{48, 0},
+			TimeOffset: 1.0 / 10.0,
+			CurrTime:   0,
+			Length:     6,
+		},
+	},
+	{
+		&components.PositionComponent{X: config.C.ScreenWidth, Y: 1.2 * config.C.PlayerHeight},
+		&components.ObjectComponent{Width: 2 * 24, Height: 2 * 40},
+		&components.VelocityComponent{X: -500, Y: 0},
+		&components.ColliderComponent{},
+		&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{84, 5}, TexCoordsEnd: mgl32.Vec2{120, 44}, TextureID: 6},
+		&components.SpriteAnimationComponent{
+			Begin:      mgl32.Vec2{22, 5},
+			End:        mgl32.Vec2{58, 44},
+			Offset:     mgl32.Vec2{64, 0},
+			TimeOffset: 1.0 / 20.0,
+			CurrTime:   0,
+			Length:     4,
+		},
+	},
+	{
+		&components.PositionComponent{X: config.C.ScreenWidth, Y: 0},
+		&components.ObjectComponent{Width: 2 * 36, Height: 2 * 22},
+		&components.VelocityComponent{X: -400, Y: 0},
+		&components.ColliderComponent{},
+		&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{194, 10}, TexCoordsEnd: mgl32.Vec2{230, 32}, TextureID: 7},
+		&components.SpriteAnimationComponent{
+			Begin:      mgl32.Vec2{0, 10},
+			End:        mgl32.Vec2{39, 32},
+			Offset:     mgl32.Vec2{48, 0},
+			TimeOffset: 1.0 / 10.0,
+			CurrTime:   0,
+			Length:     8,
+		},
+	},
+}
 
 type RandomObstacleSystem struct {
 	System
@@ -20,16 +101,31 @@ func (r *RandomObstacleSystem) Update(game *Game, dt float64) {
 	}
 }
 
+func Clone(inter interface{}) interface{} {
+	nInter := reflect.New(reflect.TypeOf(inter).Elem())
+
+	val := reflect.ValueOf(inter).Elem()
+	nVal := nInter.Elem()
+	for i := 0; i < val.NumField(); i++ {
+		nvField := nVal.Field(i)
+		nvField.Set(val.Field(i))
+	}
+
+	return nInter.Interface()
+}
+
 func (r *RandomObstacleSystem) createNewObstacle() *entities.Obstacle {
+	roc := possibleObstacles[rand.Intn(len(possibleObstacles))]
+	//deep copy components
+	randomObstacleComponents := make([]interface{}, 0, len(roc))
+	for _, c := range roc {
+		v := Clone(c)
+		randomObstacleComponents = append(randomObstacleComponents, v)
+	}
 	obstacleEntity := &entities.Obstacle{
 		Entity: entities.Entity{
-			ID: entities.GenerateUniqueEntityID(),
-			Components: []interface{}{
-				&components.PositionComponent{X: config.C.ScreenWidth, Y: r.generateRandomYPosition()},
-				&components.ObjectComponent{Width: r.generateRandomWidth(), Height: r.generateRandomHeight()},
-				&components.VelocityComponent{X: -500, Y: 0},
-				&components.ColliderComponent{},
-			},
+			ID:         entities.GenerateUniqueEntityID(),
+			Components: randomObstacleComponents,
 		},
 	}
 	return obstacleEntity
@@ -42,20 +138,4 @@ func (r *RandomObstacleSystem) shouldGenerateObstacle(dt float64) bool {
 		return true
 	}
 	return false
-}
-
-func (r *RandomObstacleSystem) generateRandomYPosition() float64 {
-	if rand.Float64() > 0.6 {
-		return 0
-	} else {
-		return 1.2 * config.C.PlayerHeight
-	}
-}
-
-func (r *RandomObstacleSystem) generateRandomWidth() float64 {
-	return rand.Float64()*30 + 30
-}
-
-func (r *RandomObstacleSystem) generateRandomHeight() float64 {
-	return rand.Float64()*30 + 30
 }
