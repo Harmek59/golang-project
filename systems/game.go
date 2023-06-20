@@ -34,7 +34,7 @@ func NewGame() *Game {
 }
 
 func (game *Game) setupSystems() {
-	game.systems = append(game.systems, &InputSystem{})
+	game.systems = append(game.systems, &JumpSystem{})
 	game.systems = append(game.systems, &MovementSystem{})
 	game.systems = append(game.systems, &CollisionSystem{})
 	game.systems = append(game.systems, &DigitOfScoreSystem{})
@@ -46,24 +46,23 @@ func (game *Game) setupSystems() {
 
 func (game *Game) setupScene() {
 	game.setupBackground()
-    game.setupScoreSprites()
+	game.setupScoreSprites()
 
 	game.AddEntity(&entities.CreateNewPlayer().Entity)
 }
-
 
 func (game *Game) setupScoreSprites() {
 	game.AddEntity(
 		&entities.Entity{
 			ID: entities.GenerateUniqueEntityID(),
 			Components: []interface{}{
-				&components.PositionComponent{X: -96 * 1.5, Y: -config.C.ScreenHeight/6 + config.C.CameraYOffset * 2 },
+				&components.PositionComponent{X: -96 * 1.5, Y: -config.C.ScreenHeight/6 + config.C.CameraYOffset*2},
 				&components.ObjectComponent{
 					Width:  96,
 					Height: 96,
 				},
 				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{0, 0}, TexCoordsEnd: mgl32.Vec2{32, 32}, TextureID: 9},
-                &components.DigitOfScoreComponent{Digit: 3},
+				&components.DigitOfScoreComponent{Digit: 3},
 			},
 		},
 	)
@@ -71,13 +70,13 @@ func (game *Game) setupScoreSprites() {
 		&entities.Entity{
 			ID: entities.GenerateUniqueEntityID(),
 			Components: []interface{}{
-				&components.PositionComponent{X: -96 * 0.5, Y: -config.C.ScreenHeight/6 + config.C.CameraYOffset * 2 },
+				&components.PositionComponent{X: -96 * 0.5, Y: -config.C.ScreenHeight/6 + config.C.CameraYOffset*2},
 				&components.ObjectComponent{
 					Width:  96,
 					Height: 96,
 				},
 				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{0, 0}, TexCoordsEnd: mgl32.Vec2{32, 32}, TextureID: 9},
-                &components.DigitOfScoreComponent{Digit: 2},
+				&components.DigitOfScoreComponent{Digit: 2},
 			},
 		},
 	)
@@ -85,13 +84,13 @@ func (game *Game) setupScoreSprites() {
 		&entities.Entity{
 			ID: entities.GenerateUniqueEntityID(),
 			Components: []interface{}{
-				&components.PositionComponent{X: 96 * 0.5, Y: -config.C.ScreenHeight/6 + config.C.CameraYOffset * 2 },
+				&components.PositionComponent{X: 96 * 0.5, Y: -config.C.ScreenHeight/6 + config.C.CameraYOffset*2},
 				&components.ObjectComponent{
 					Width:  96,
 					Height: 96,
 				},
 				&components.SpriteComponent{TexCoordsBegin: mgl32.Vec2{0, 0}, TexCoordsEnd: mgl32.Vec2{32, 32}, TextureID: 9},
-                &components.DigitOfScoreComponent{Digit: 1},
+				&components.DigitOfScoreComponent{Digit: 1},
 			},
 		},
 	)
@@ -206,7 +205,7 @@ func (game *Game) Update(dt float64) error {
 			game.Entities = nil
 			game.Score = 0
 			game.setupBackground()
-            game.setupScoreSprites()
+			game.setupScoreSprites()
 			game.AddEntity(playerEntity)
 			game.gameover = false
 		}

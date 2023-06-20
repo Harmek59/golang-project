@@ -7,10 +7,44 @@ Celem projektu jest stworzenie prostej gry platformowej 2D przy użyciu języka 
 - https://github.com/go-gl/glfw
 - https://github.com/go-gl/mathgl
  
-## Zespól
+## Zespół
 
 - Michał Kacprzak
 - Piotr Harmuszkiewicz
+
+## Podział pracy
+
+- Michał Kacprzak
+  - stworzenie architektury realizującej wzorzec entity-component-system (ECS)
+  - implementacja componentów związanych z:
+    - poruszaniem się obiektu
+    - pozycją obiektu
+    - wielkością obiektu
+  - implementacja systemów odpowiadających za:
+    - poruszanie się obiektów
+    - generowanie przeszkód
+    - skakanie postaci
+    - detekcje kolizji
+    - zarządzaniem stanem gry - rozpoczynanie, resetowanie, śledzenie wyniku użytkownika
+  - implementacja encji reprezentujących:
+    - gracza
+    - przeszkody
+  - przygotowanie dokumentacji projektu
+- Piotr Harmuszkiewicz
+  - implementacja componentów związanych z:
+    - wynikiem gry
+    - kolicją obiektu
+    - spritami obiektów
+    - animacją obiektów
+  - implementacja systemów odpowiadających za:
+    - renderowanie obiektów
+    - animacje obiektów
+    - wyświetlaniem wyniku
+    - wyświetlanie napisu "Game Over" w przypadku
+    - generowanie przeszkód
+    - zarządzaniem stanem gry - rozpoczynanie, resetowanie
+  - przygotowanie spritów oraz shaderów używanych w projekcie
+  - przygotowanie dokumentacji projektu
 
 ## Kompilacja
 ```shell
@@ -25,4 +59,10 @@ go mod tidy && go build && ./game2d
 ### Esc - quit
 ### Space - jump
 ### Enter - restart after GameOver
+
+## Wygląd gry
+
+![game.png](docs/images/game.png)
+
+![game_over.png](docs/images/game_over.png)
 

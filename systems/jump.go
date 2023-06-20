@@ -6,11 +6,11 @@ import (
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
-type InputSystem struct {
+type JumpSystem struct {
 	System
 }
 
-func (i *InputSystem) Update(game *Game, _ float64) {
+func (i *JumpSystem) Update(game *Game, _ float64) {
 	playerEntity := game.FindPlayerEntity()
 	playerJumpableComponent := playerEntity.GetComponent(&components.JumpableComponent{}).(*components.JumpableComponent)
 
